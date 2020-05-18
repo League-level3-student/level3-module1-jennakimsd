@@ -49,19 +49,21 @@ public class _02_TextUndoRedo implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getKeyCode()!=(KeyEvent.VK_BACK_SPACE) && e.getKeyCode()!=(KeyEvent.VK_TAB)) {
+		if(e.getKeyCode()!=(KeyEvent.VK_BACK_SPACE) && e.getKeyCode()!=(KeyEvent.VK_UP)) {
 			s+=e.getKeyChar();
 			label.setText(s);
 			//c.push(e.getKeyChar());
 		}
 		if(e.getKeyCode()==(KeyEvent.VK_BACK_SPACE)) {
-			System.out.println(c.push(s.charAt(s.length()-1)));
+			c.push(s.charAt(s.length()-1));
 			s = s.substring(0, s.length()-1);
 			label.setText(s);
 		}
-		if(e.getKeyCode()==(KeyEvent.VK_TAB)) {
-			s = s + c.pop();
-			label.setText(s);
+		if(e.getKeyCode()==(KeyEvent.VK_UP)) {
+			if(c.isEmpty() == false) {
+				s = s + c.pop();
+				label.setText(s);
+			}
 		}
 	}
 
