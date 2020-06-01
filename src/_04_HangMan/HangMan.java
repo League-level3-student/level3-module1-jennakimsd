@@ -21,13 +21,16 @@ public class HangMan implements KeyListener{
 	JFrame frame = new JFrame();
 	JPanel panel = new JPanel();
 	JLabel label = new JLabel();
-	Stack<String> c = new Stack<String>();
+	static Stack<String> c = new Stack<String>();
 
 	
 	public static void main(String[] args) {
 		new HangMan().createUI();
 		String s = JOptionPane.showInputDialog("Welcome to Hangman! How many words would you like to guess?");
-		Utilities.readRandomLineFromFile("dictionary.txt");
+		int p = Integer.parseInt(s);
+		for(int i = 0; i < p; i++) {
+			c.push(Utilities.readRandomLineFromFile("dictionary.txt"));
+		}	
 	}
 
 	/*Step 2: Pop the word off the top of the stack and use a JLabel to display a blank line for all the characters in the word. 
@@ -54,6 +57,11 @@ public class HangMan implements KeyListener{
 		panel.add(label);
 		frame.pack();
 		frame.setTitle("Hang Man");
+		String p = "";
+		for(int i = 0; i < c.pop().length(); i++) {
+			p+="_";
+		}
+		label.setText(p);
 	}
 
 
