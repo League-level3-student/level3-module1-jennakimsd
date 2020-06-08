@@ -12,12 +12,12 @@ import javax.swing.JPanel;
 
 
 public class HangMan implements KeyListener{
-	/*Step 1: When the program starts, it will ask the user for a number (up to the total words in the file). Then the 
+	 /*Step 1: When the program starts, it will ask the user for a number (up to the total words in the file). Then the 
     program will read that many words from the "dictionary.txt" file and push them to a Stack. 
     Use the readRandomLineFromFile method in the Utilities class. The words should be selected randomly so 
     not every game is played with the same set of words. You can use the Stack's contains() method to make sure
     there are no duplicate words. */
-	int lives = 10;
+	static int lives = 10;
 	JFrame frame = new JFrame();
 	JPanel panel = new JPanel();
 	JLabel label = new JLabel();
@@ -62,6 +62,11 @@ public class HangMan implements KeyListener{
 			p+="_";
 		}
 		label.setText(p);
+		if(lives == 0) {
+			JOptionPane.showMessageDialog(null, "You ran out of lives. The word was " + p);
+			JOptionPane.showOptionDialog(parentComponent, message, title, optionType, messageType, icon, options, initialValue)
+			
+		}
 	}
 
 
