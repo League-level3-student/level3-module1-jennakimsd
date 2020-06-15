@@ -22,15 +22,15 @@ public class HangMan implements KeyListener{
 	JPanel panel = new JPanel();
 	JLabel label = new JLabel();
 	static Stack<String> c = new Stack<String>();
+	String underlines = "";
+	String word = "";
 
 	
 	public static void main(String[] args) {
-		new HangMan().createUI();
-		String s = JOptionPane.showInputDialog("Welcome to Hangman! How many words would you like to guess?");
-		int p = Integer.parseInt(s);
-		for(int i = 0; i < p; i++) {
-			c.push(Utilities.readRandomLineFromFile("dictionary.txt"));
-		}	
+		HangMan h = new HangMan();
+		h.setup();
+		h.createUI();
+		
 	}
 
 	/*Step 2: Pop the word off the top of the stack and use a JLabel to display a blank line for all the characters in the word. 
@@ -55,20 +55,28 @@ public class HangMan implements KeyListener{
 		frame.setVisible(true);
 		frame.addKeyListener(this);
 		panel.add(label);
-		frame.pack();
 		frame.setTitle("Hang Man");
-		String p = "";
-		for(int i = 0; i < c.pop().length(); i++) {
-			p+="_";
-		}
-		label.setText(p);
-		if(lives == 0) {
-			JOptionPane.showMessageDialog(null, "You ran out of lives. The word was " + p);
-			JOptionPane.showOptionDialog(parentComponent, message, title, optionType, messageType, icon, options, initialValue)
-			
-		}
+		getWord();
+		frame.pack();
 	}
-
+	
+	public void getWord() {
+		underlines = "";
+		word = c.pop();
+		System.out.println(word);
+		for(int i = 0; i < word.length(); i++) {
+			underlines+="_ ";
+		}
+		label.setText(underlines);
+	}
+	
+	public void setup() {
+		String s = JOptionPane.showInputDialog("Welcome to Hangman! How many words would you like to guess?");
+		int p = Integer.parseInt(s);
+		for(int i = 0; i < p; i++) {
+			c.push(Utilities.readRandomLineFromFile("dictionary.txt"));
+		}	
+	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -80,7 +88,15 @@ public class HangMan implements KeyListener{
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+		char letterPressed = e.getKeyChar();
+		StringBuilder sb = new StringBuilder(underlines);
+		for(int i = 0; i < word.length(); i++) {
+			if(word.charAt(i) == letterPressed) {
+				sb.replace(i*2, (i*2)+1, letterPressed + "");
+			}
+		}
+		underlines = sb.toString();
+		label.setText(underlines);
 	}
 
 
