@@ -17,10 +17,11 @@ public class HangMan implements KeyListener{
     Use the readRandomLineFromFile method in the Utilities class. The words should be selected randomly so 
     not every game is played with the same set of words. You can use the Stack's contains() method to make sure
     there are no duplicate words. */
-	static int lives = 10;
+	int lives = 5;
 	JFrame frame = new JFrame();
 	JPanel panel = new JPanel();
 	JLabel label = new JLabel();
+	JLabel livess = new JLabel();
 	static Stack<String> c = new Stack<String>();
 	String underlines = "";
 	String word = "";
@@ -54,7 +55,9 @@ public class HangMan implements KeyListener{
 		frame.add(panel);
 		frame.setVisible(true);
 		frame.addKeyListener(this);
+		livess.setText("lives: " + lives);
 		panel.add(label);
+		panel.add(livess);
 		frame.setTitle("Hang Man");
 		getWord();
 		frame.pack();
@@ -68,6 +71,7 @@ public class HangMan implements KeyListener{
 			underlines+="_ ";
 		}
 		label.setText(underlines);
+		livess.setText("lives: " + lives);
 	}
 	
 	public void setup() {
@@ -89,14 +93,27 @@ public class HangMan implements KeyListener{
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
 		char letterPressed = e.getKeyChar();
+		boolean found = false;
 		StringBuilder sb = new StringBuilder(underlines);
 		for(int i = 0; i < word.length(); i++) {
 			if(word.charAt(i) == letterPressed) {
 				sb.replace(i*2, (i*2)+1, letterPressed + "");
+				found = true;
+				livess.setText("lives: " + lives);
+			}
+		}
+		if(!found) {
+			lives--;
+			livess.setText("lives: " + lives);
+			if(lives==0) {
+				JOptionPane.showMessageDialog(null, "Game Over!");
 			}
 		}
 		underlines = sb.toString();
 		label.setText(underlines);
+		if(!underlines.contains("_")) {
+			getWord();
+		}
 	}
 
 
