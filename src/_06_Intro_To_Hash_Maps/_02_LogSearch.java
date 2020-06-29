@@ -1,7 +1,44 @@
 package _06_Intro_To_Hash_Maps;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
 
-public class _02_LogSearch {
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+public class _02_LogSearch implements ActionListener {
+	HashMap<Integer, String> log = new HashMap<Integer, String>();
+	JFrame frame = new JFrame();
+	JPanel panel = new JPanel();
+	JButton button1 = new JButton();
+	JButton button2 = new JButton();
+	JButton button3 = new JButton();
+	JButton button4 = new JButton();
+	
+	public static void main(String[] args) {
+		new _02_LogSearch().createUI();
+	}
+	private void createUI() {
+		frame.add(panel);
+		frame.setVisible(true);
+		button1.setText("Add Entry");
+		button2.setText("Search by ID");
+		button3.setText("View List");
+		button4.setText("Remove Entry");
+		button1.addActionListener(this);
+		button2.addActionListener(this);
+		button3.addActionListener(this);
+		button4.addActionListener(this);
+		panel.add(button1);
+		panel.add(button2);
+		panel.add(button3);
+		panel.add(button4);
+		frame.setTitle("Log Search");
+		frame.pack();
+	}
   /* 
 	 * Crate a HashMap of Integers for the keys and Strings for the values.
 	 * Create a GUI with three buttons. 
@@ -29,5 +66,41 @@ public class _02_LogSearch {
 	 * 				is not in the list. 
 	 *
 	 * */
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		JButton buttonPressed = (JButton) e.getSource();
+		if (buttonPressed == button1) {
+			String s = JOptionPane.showInputDialog("enter an ID number");
+			int i = Integer.parseInt(s);
+			String n = JOptionPane.showInputDialog("enter a name");
+			log.put(i, n);
+		}
+		if (buttonPressed == button2) {
+			String s = JOptionPane.showInputDialog("enter an ID number");
+			int i = Integer.parseInt(s);
+			if(log.containsKey(i)) {
+				JOptionPane.showMessageDialog(null, log.get(i));
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "this entry doesn't exist");
+			}
+		}
+		if (buttonPressed == button3) {
+			for(Integer i: log.keySet()) {
+				JOptionPane.showMessageDialog(null, "ID: " + i + " Name: " + log.get(i));
+			}
+		}
+		if (buttonPressed == button4) {
+			String s = JOptionPane.showInputDialog("enter an ID number");
+			int i = Integer.parseInt(s);
+			if(log.containsKey(i)) {
+				log.remove(i);
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "this entry doesn't exist");
+			}
+		}
+	}
 	
 }

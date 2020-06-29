@@ -106,7 +106,9 @@ public class HangMan implements KeyListener{
 			lives--;
 			livess.setText("lives: " + lives);
 			if(lives==0) {
-				JOptionPane.showMessageDialog(null, "Game Over!");
+				String[] options = {"yes", "no"};
+		        Integer[] choice = {0,1};
+				JOptionPane.showOptionDialog(null, "Would you like to play again?", "Game Over",  JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, choice);
 			}
 		}
 		underlines = sb.toString();
