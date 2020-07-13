@@ -65,13 +65,19 @@ public class HangMan implements KeyListener{
 	
 	public void getWord() {
 		underlines = "";
-		word = c.pop();
+		if(c.size()!=0) {
+			word = c.pop();
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "GAME OVER"); 
+		}
 		System.out.println(word);
 		for(int i = 0; i < word.length(); i++) {
 			underlines+="_ ";
 		}
 		label.setText(underlines);
 		livess.setText("lives: " + lives);
+		System.out.println(label.getText());
 	}
 	
 	public void setup() {
@@ -108,7 +114,15 @@ public class HangMan implements KeyListener{
 			if(lives==0) {
 				String[] options = {"yes", "no"};
 		        Integer[] choice = {0,1};
-				JOptionPane.showOptionDialog(null, "Would you like to play again?", "Game Over",  JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, choice);
+				int i = JOptionPane.showOptionDialog(null, "Would you like to play again?", "Game Over",  JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, choice);
+				if(i==0) {
+					getWord();
+					lives = 5;
+					sb = new StringBuilder(underlines);
+				}
+				if(i==1) {
+					System.exit(0);
+				}
 			}
 		}
 		underlines = sb.toString();

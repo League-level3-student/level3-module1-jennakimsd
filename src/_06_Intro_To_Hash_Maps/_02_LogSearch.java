@@ -87,9 +87,12 @@ public class _02_LogSearch implements ActionListener {
 			}
 		}
 		if (buttonPressed == button3) {
+			String s = "";
+			System.out.println(log.keySet());
 			for(Integer i: log.keySet()) {
-				JOptionPane.showMessageDialog(null, "ID: " + i + " Name: " + log.get(i));
+				s += "ID: " + i + " Name: " + log.get(i) + "\n";
 			}
+			JOptionPane.showMessageDialog(null, s);
 		}
 		if (buttonPressed == button4) {
 			String s = JOptionPane.showInputDialog("enter an ID number");
